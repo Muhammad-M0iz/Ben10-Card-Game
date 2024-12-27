@@ -1,0 +1,40 @@
+body {
+    display: flex; /* Use Flexbox for layout */
+    flex-direction: column; /* Arrange items in a single column */
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    height: 100vh; /* Full viewport height */
+    margin: 0; /* Remove default margin */
+    background-color: #f0f0f0; /* Optional background */
+}
+
+.logo {
+    position: relative;
+    margin-bottom: 20px;
+    top:-150px;
+}
+
+.button {
+    position: relative;
+    top:-120px;
+    left:75px;
+    width: 100px;
+    display: grid;
+    margin: 10px 0; 
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+    background: linear-gradient(135deg, #45a049, #4CAF50);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
