@@ -20,9 +20,11 @@ export default function Game() {
   const [isWin, setIsWin] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
 
-
-  // Using the simplified hook - it will automatically detect all images
-  const isLoading = useLoadImages();
+  // Extract image URLs for preloading
+  const imageUrls = INITIAL_CARDS.map(card => card.image);
+  
+  // Use the improved hook with image URLs
+  const { loading: isLoading, progress } = useLoadImages(imageUrls);
 
   const shuffleArray = (array) => {
     const shuffled = [...array];
@@ -32,7 +34,6 @@ export default function Game() {
     }
     return shuffled;
   };
-
 
   const handleCardClick = (event) => {
     const clickedCard = event.currentTarget.dataset.cardName;
@@ -68,8 +69,9 @@ export default function Game() {
     memory.current = [];
   };
 
+  // Show loader with progress while images are loading
   if (isLoading) {
-    return <Loader />;
+    return <Loader progress={progress} />;
   }
 
   return (
@@ -93,9 +95,15 @@ export default function Game() {
               onClick={handleCardClick}
               disabled={isWin || isGameOverRef.current || isFlipping}
             >
-              <img src={card.image} alt={card.name} className="card-image" />
+              <img 
+                src={card.image} 
+                alt={card.name} 
+                className="card-image"
+                loading="eager" // Explicitly mark images for eager loading
+              />
             </div>
             <div className="card-back-container">
+              {/* Back of card content here */}
             </div>
           </ReactCardFlip>
         ))}

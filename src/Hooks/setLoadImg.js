@@ -1,43 +1,54 @@
 import { useState, useEffect } from "react";
 
-export default function useLoadImages() {
+export default function useLoadImages(imageUrls) {
   const [loading, setLoading] = useState(true);
+  const [imagesLoaded, setImagesLoaded] = useState(0);
 
   useEffect(() => {
-    const images = document.getElementsByTagName('img');
-    
-    if (images.length === 0) {
+    if (!imageUrls || imageUrls.length === 0) {
       setLoading(false);
       return;
     }
 
+    let mounted = true;
+    const totalImages = imageUrls.length;
     let loadedCount = 0;
-    const totalImages = images.length;
 
-    const handleLoad = () => {
-      loadedCount++;
-      if (loadedCount === totalImages) {
-        setLoading(false);
-      }
-    };
-
-    Array.from(images).forEach(img => {
-      if (img.complete) {
-        handleLoad();
-      } else {
-        img.addEventListener('load', handleLoad);
-        img.addEventListener('error', handleLoad); // Count errors as loaded to avoid stuck state
-      }
-    });
-
-    // Cleanup
-    return () => {
-      Array.from(images).forEach(img => {
-        img.removeEventListener('load', handleLoad);
-        img.removeEventListener('error', handleLoad);
+    const preloadImage = (url) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+          if (mounted) {
+            loadedCount++;
+            setImagesLoaded(loadedCount);
+            resolve(url);
+          }
+        };
+        img.onerror = () => {
+          if (mounted) {
+            loadedCount++;
+            setImagesLoaded(loadedCount);
+            reject(url);
+          }
+        };
       });
     };
-  }, []); // Empty dependency array means this runs once on mount
 
-  return loading;
+    Promise.all(imageUrls.map(url => preloadImage(url).catch(err => err)))
+      .then(() => {
+        if (mounted) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [imageUrls]);
+
+  return {
+    loading,
+    progress: imageUrls?.length ? Math.round((imagesLoaded / imageUrls.length) * 100) : 0
+  };
 }
