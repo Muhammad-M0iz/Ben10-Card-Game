@@ -53,7 +53,6 @@ export default function Game() {
         });
       } else {
         isGameOverRef.current = true;
-        alert(`Game Over! Final Score: ${score}`);
       }
       setTimeout(() => {
         setIsFlipping(false);
@@ -76,13 +75,25 @@ export default function Game() {
 
   return (
     <div className="game-container">
-      <h1>{isWin ? "YOU WON 🎉🎉🎉" : `SCORE: ${score}`}</h1>
+      <div className="game-header">
+         <h1 className="game-title">
+            SCORE: {score}
+         </h1>
+      </div>
+
       {(isWin || isGameOverRef.current) && (
-        <button onClick={restartGame} className="restart-button">
-          Restart Game
-        </button>
+        <div className="game-overlay">
+            <div className="overlay-content">
+                <h2 className="overlay-title">{isWin ? "🎉 YOU WON! 🎉" : "GAME OVER"}</h2>
+                <p className="final-score">Final Score: {score}</p>
+                <button onClick={restartGame} className="primary-button">
+                    Restart Game
+                </button>
+            </div>
+        </div>
       )}
-      <div className="card-container">
+
+      <div className={`card-container ${isWin || isGameOverRef.current ? 'disabled' : ''}`}>
         {cards.map((card) => (
           <ReactCardFlip
             key={card.id}
@@ -93,13 +104,12 @@ export default function Game() {
               className="card"
               data-card-name={card.name}
               onClick={handleCardClick}
-              disabled={isWin || isGameOverRef.current || isFlipping}
             >
               <img 
                 src={card.image} 
                 alt={card.name} 
                 className="card-image"
-                loading="eager" // Explicitly mark images for eager loading
+                loading="eager"
               />
             </div>
             <div className="card-back-container">

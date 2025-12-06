@@ -5,17 +5,19 @@ import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
-    <>
+    <div className="home-container">
       <img className="logo" src={logo} alt="Ben 10 Logo" />
-      
-      <Link to="/game">
-        <button className="button">Play</button>
-      </Link>
-      
-      <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-        <button className="button">GitHub</button>
-      </a>
-    </>
+
+      <div className="button-container">
+        <Link to="/game">
+          <button className="primary-button">Play</button>
+        </Link>
+
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+          <button className="primary-button">GitHub</button>
+        </a>
+      </div>
+    </div>
   );
 }
 

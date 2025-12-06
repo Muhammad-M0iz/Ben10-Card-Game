@@ -1,40 +1,35 @@
-body {
-    display: flex; /* Use Flexbox for layout */
-    flex-direction: column; /* Arrange items in a single column */
-    justify-content: center; /* Center items vertically */
-    align-items: center; /* Center items horizontally */
-    height: 100vh; /* Full viewport height */
-    margin: 0; /* Remove default margin */
-    background-color: #f0f0f0; /* Optional background */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
 }
 
 .logo {
-    position: relative;
-    margin-bottom: 20px;
-    top:-150px;
+    max-width: 80%;
+    width: 400px;
+    margin-bottom: 40px;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    animation: pulse 3s infinite ease-in-out;
 }
 
-.button {
-    position: relative;
-    top:-120px;
-    left:75px;
-    width: 100px;
-    display: grid;
-    margin: 10px 0; 
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #4CAF50, #45a049);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }
 
-.button:hover {
-    background: linear-gradient(135deg, #45a049, #4CAF50);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@media (max-width: 600px) {
+    .logo {
+        width: 250px;
+    }
 }
