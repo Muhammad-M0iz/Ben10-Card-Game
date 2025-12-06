@@ -53,7 +53,6 @@ export default function Game() {
         });
       } else {
         isGameOverRef.current = true;
-        // Replaced alert with in-UI game over message handled by render logic
       }
       setTimeout(() => {
         setIsFlipping(false);
@@ -78,16 +77,19 @@ export default function Game() {
     <div className="game-container">
       <div className="game-header">
          <h1 className="game-title">
-            {isWin ? "🎉 YOU WON! 🎉" : isGameOverRef.current ? "GAME OVER" : `SCORE: ${score}`}
+            SCORE: {score}
          </h1>
       </div>
 
       {(isWin || isGameOverRef.current) && (
-        <div className="game-over-controls">
-            {isGameOverRef.current && <p className="final-score">Final Score: {score}</p>}
-            <button onClick={restartGame} className="primary-button">
-            Restart Game
-            </button>
+        <div className="game-overlay">
+            <div className="overlay-content">
+                <h2 className="overlay-title">{isWin ? "🎉 YOU WON! 🎉" : "GAME OVER"}</h2>
+                <p className="final-score">Final Score: {score}</p>
+                <button onClick={restartGame} className="primary-button">
+                    Restart Game
+                </button>
+            </div>
         </div>
       )}
 
