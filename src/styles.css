@@ -1,3 +1,39 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Primary Button */
+.primary-button {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.primary-button:hover {
+  background: linear-gradient(135deg, #45a049, #4CAF50);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+}
+
 /* Game Container */
 .game-container {
   min-height: 100vh;
@@ -9,9 +45,43 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  padding-top: 40px;
 }
 
-/* Background Video */
+.game-header {
+  margin-bottom: 20px;
+}
+
+.game-title {
+  font-size: 3rem;
+  margin: 0;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.game-over-controls {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.final-score {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #ffd700;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* Card Container */
 .card-container {
@@ -20,82 +90,60 @@
   gap: 20px;
   max-width: 800px;
   width: 100%;
-  margin: 20px auto;
+  margin: 0 auto;
   padding: 20px;
   justify-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.card-container.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* Individual Card */
 .card {
   width: 150px;
   height: 200px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  background-color: rgba(50, 131, 54, 0.7);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.2);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 .card img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
+  object-fit: cover;
 }
 
 /* Card Back */
 .card-back-container {
   background-image: url('./assets/back_card.png');
-  background-size: contain;
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   width: 150px;
   height: 200px;
-  color: white;
-  font-size: 18px;
-  border-radius: 10px;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-
-/* Restart Button */
-.restart-button {
-  margin: 20px 0;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #4CAF50, #45a049);
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.restart-button:hover {
-  background: linear-gradient(135deg, #45a049, #4CAF50);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Game Title */
-h1 {
-  font-size: 2.5rem;
-  margin: 20px 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Responsive Design */
@@ -116,7 +164,7 @@ h1 {
 @media (max-width: 600px) {
   .card-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 15px;
     padding: 10px;
   }
 
@@ -126,25 +174,27 @@ h1 {
     height: 170px;
   }
 
-  h1 {
+  .game-title {
     font-size: 2rem;
+  }
+
+  .game-container {
+    padding-top: 20px;
   }
 }
 
 @media (max-width: 400px) {
   .card-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    padding: 8px;
+    gap: 10px;
   }
 
   .card,
   .card-back-container {
-    width: 100px;
+    width: 110px;
     height: 150px;
   }
 
-  h1 {
+  .game-title {
     font-size: 1.8rem;
   }
 }
